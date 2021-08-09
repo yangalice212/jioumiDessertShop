@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <div class="d-sm-flex align-items-center vh-100 banner">
-      <section class="banner-img h-100"></section>
-      <section class="banner-text p-5 d-flex flex-column justify-content-center">
-        <h2>Nature/ Deicious/</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur ipsa debitis, veritatis
-          non recusandae fugit eveniet minus, dignissimos corporis, reiciendis reprehenderit
-          repellat incidunt alias facere eaque id quaerat! Eaque, nobis.
-        </p>
-        <router-link
-          to="/products"
-          class="banner-link d-flex align-items-center text-decoration-none w-25 h5"
-        >
-          Shop
-          <span class="material-icons">
-            arrow_forward_ios
-          </span>
-        </router-link>
-      </section>
-    </div>
+  <div class="d-sm-flex align-items-center vh-100 banner">
+    <section class="banner-img h-100"></section>
+    <section class="banner-text p-5 d-flex flex-column justify-content-center">
+      <h2>Nature/ Deicious/</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur ipsa debitis, veritatis
+        non recusandae fugit eveniet minus, dignissimos corporis, reiciendis reprehenderit
+        repellat incidunt alias facere eaque id quaerat! Eaque, nobis.
+      </p>
+      <router-link
+        to="/products"
+        class="banner-link d-flex align-items-center text-decoration-none w-25 h5"
+      >
+        Shop
+        <span class="material-icons">
+          arrow_forward_ios
+        </span>
+      </router-link>
+    </section>
   </div>
 </template>
 
@@ -35,7 +33,7 @@ export default {};
     width: 100%;
   }
   &-img {
-    background: url(https://images.unsplash.com/photo-1579372786545-d24232daf58c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80)
+    background: url(../assets/img/banner.jpg)
       center;
     background-size: cover;
   }
