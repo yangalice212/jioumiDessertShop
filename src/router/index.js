@@ -33,6 +33,38 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Login.vue'),
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../views/Dashboard/Layout.vue'),
+    children: [
+      {
+        path: 'products',
+        name: 'Adminproducts',
+        component: () => import('../views/Dashboard/Products.vue'),
+      },
+
+      {
+        path: 'orders',
+        name: 'orders',
+        component: () => import('../views/Dashboard/Orders.vue'),
+      },
+      {
+        path: 'coupons',
+        name: 'coupons',
+        component: () => import('../views/Dashboard/Coupons.vue'),
+      },
+    ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFound.vue'),
+  },
 ];
 
 const router = createRouter({

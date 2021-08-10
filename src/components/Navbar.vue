@@ -33,11 +33,22 @@
           </li>
         </ul>
       </div>
-      <router-link to="/cart" class="d-flex align-items-center text-decoration-none"
-        ><span class="material-icons">
-          local_mall
-        </span></router-link
-      >
+      <ul class="list-unstyled d-flex mb-0">
+        <li class="me-3">
+          <router-link to="/wishlist" class="d-flex align-items-center text-decoration-none"
+            ><span class="material-icons">
+              favorite
+            </span></router-link
+          >
+        </li>
+        <li>
+          <router-link to="/cart" class="d-flex align-items-center text-decoration-none"
+            ><span class="material-icons">
+              local_mall
+            </span></router-link
+          >
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -45,7 +56,6 @@
 <style lang="scss">
 .navbar-brand {
   img {
-    width: 100%;
     height: 38px;
   }
 }

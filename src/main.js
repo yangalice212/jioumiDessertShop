@@ -13,6 +13,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 // import Loading from '@/components/Loading.vue';
 import App from './App.vue';
 import router from './router';
+import { thousands, date } from './methods/filter';
 
 Object.keys(rules).forEach((rule) => {
   defineRule(rule, rules[rule]);
@@ -30,6 +31,11 @@ const options = {
   confirmButtonColor: '#3085d6',
 };
 app.use(VueSweetalert2, options);
+
+app.config.globalProperties.$filter = {
+  thousands,
+  date,
+};
 
 app.component('Form', Form);
 app.component('Field', Field);
