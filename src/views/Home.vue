@@ -1,5 +1,5 @@
 <template>
-  <div class="d-sm-flex align-items-center vh-100 banner">
+  <div class="banner d-sm-flex align-items-center vh-100 mt-6">
     <section class="banner-img h-100"></section>
     <section class="banner-text p-5 d-flex flex-column justify-content-center">
       <h2>Nature/ Deicious/</h2>
@@ -27,7 +27,6 @@ export default {};
 
 <style lang="scss">
 .banner {
-  margin-top: 70px;
   &-img,
   &-text {
     width: 100%;

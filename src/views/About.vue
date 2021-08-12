@@ -1,6 +1,6 @@
 <template>
   <div class="about container vh-100">
-    <h1>This is an about page</h1>
+    <h2>This is an about page</h2>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non dolore esse iusto voluptatum
       obcaecati dolorum voluptas maxime rerum vel voluptatibus, fugiat iste eos itaque ab? Dolor
@@ -16,7 +16,5 @@
 </template>
 
 <style lang="scss">
-  .about {
-    margin-top: 70px;
-  }
+
 </style>

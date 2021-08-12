@@ -1,6 +1,6 @@
 <template>
   <Navbar/>
-  <router-view />
+  <router-view class="content"/>
   <footer class="py-3">
     <div class="container d-flex align-items-center">
       <p class="mb-0">&copy; 2021 Jioumi All rights reserved</p>

@@ -42,16 +42,49 @@
           >
         </li>
         <li>
-          <router-link to="/cart" class="d-flex align-items-center text-decoration-none"
+          <router-link
+            to="/cart"
+            class="d-flex align-items-center text-decoration-none position-relative"
             ><span class="material-icons">
-              local_mall
-            </span></router-link
-          >
+              shopping_bag
+            </span>
+            <span v-if="cart?.carts?.length !== 0"
+              class="badge rounded-pill bg-warning position-absolute"
+              style="top: -8px; right: -12px;"
+              >{{ cart?.carts?.length }}</span
+            >
+          </router-link>
         </li>
       </ul>
     </div>
   </nav>
 </template>
+
+<script>
+import emitter from '@/assets/js/emitter';
+
+export default {
+  data() {
+    return {
+      cart: {},
+    };
+  },
+  methods: {
+    getCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.get(url).then((res) => {
+        this.cart = res.data.data;
+      });
+    },
+  },
+  mounted() {
+    this.getCart();
+    emitter.on('update-cart', () => {
+      this.getCart();
+    });
+  },
+};
+</script>
 
 <style lang="scss">
 .navbar-brand {

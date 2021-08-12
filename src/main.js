@@ -10,7 +10,7 @@ import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-// import Loading from '@/components/Loading.vue';
+import Loading from '@/components/Loading.vue';
 import App from './App.vue';
 import router from './router';
 import { thousands, date } from './methods/filter';
@@ -40,7 +40,7 @@ app.config.globalProperties.$filter = {
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);
-// app.component('Loading', Loading);
+app.component('Loading', Loading);
 app.use(VueAxios, axios);
 app.use(router);
 app.mount('#app');
