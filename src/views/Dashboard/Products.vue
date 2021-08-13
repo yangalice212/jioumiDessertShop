@@ -1,5 +1,5 @@
 <template>
-  <!-- <Loading :isLoading="isLoading" /> -->
+  <Loading :isLoading="isLoading" />
   <div class="container-fluid container-lg">
     <div class="d-flex justify-content-end my-4">
       <button
@@ -18,7 +18,7 @@
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table text-warning" style="min-width: 650px;">
+      <table class="table text-warning" style="min-width: 700px;">
         <thead>
           <tr>
             <th width="20%">Category</th>
@@ -43,7 +43,7 @@
                   class="form-check-input"
                   type="checkbox"
                   checked
-                  @click="updateProduct(item)"
+                  @click="updateEnabled(item)"
                   :id="item.id"
                 />
                 <label class="form-check-label" :for="item.id">啟用</label>
@@ -52,7 +52,7 @@
                 ><input
                   class="form-check-input"
                   type="checkbox"
-                  @click="updateProduct(item)"
+                  @click="updateEnabled(item)"
                   :id="item.id"
                 />
                 <label class="form-check-label text-gray" :for="item.id">未啟用</label>
@@ -75,26 +75,31 @@
       </table>
     </div>
   </div>
-  <!-- <ProductModal /> -->
+  <ProductModal
+    :product="tempProduct"
+    :is-new="isNew"
+    @update-product="updateProduct"
+    ref="productModal"
+  />
 </template>
 
 <script>
-// import ProductModal from '@/components/ProductModal.vue';
+import ProductModal from '@/components/ProductModal.vue';
 
 export default {
   name: 'Products',
   data() {
     return {
       products: [],
-      tempProduct: {},
+      tempProduct: { imagesUrl: [] },
       pagination: {},
       isNew: false,
       isLoading: false,
     };
   },
-  // components: {
-  //   ProductModal,
-  // },
+  components: {
+    ProductModal,
+  },
   mounted() {
     this.getProducts();
   },
@@ -124,14 +129,20 @@ export default {
     },
     openModal(item, status) {
       const { productModal } = this.$refs;
-      this.tempProduct = { ...item };
+      this.isNew = window.event.target.dataset.action;
+      this.$refs.productModal.imgData = null;
       switch (status) {
         case 'new':
           this.isNew = true;
+          this.tempProduct = { imagesUrl: [] };
           productModal.openModal();
           break;
         case 'edit':
           this.isNew = false;
+          this.tempProduct = { ...item };
+          if (!this.tempProduct.imagesUrl) {
+            this.tempProduct.imagesUrl = [];
+          }
           productModal.openModal();
           break;
         default:
@@ -154,6 +165,39 @@ export default {
             });
             this.getProducts();
             productModal.hideModal();
+            this.isLoading = false;
+          } else {
+            this.$swal({
+              title: res.data.message,
+              icon: 'error',
+              showCancelButton: true,
+              cancelButtonText: '取消',
+            });
+            this.isLoading = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    updateEnabled(item) {
+      this.isLoading = true;
+      this.tempProduct = { ...item };
+      if (this.tempProduct.is_enabled) {
+        this.tempProduct.is_enabled = 0;
+      } else {
+        this.tempProduct.is_enabled = 1;
+      }
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.$http
+        .put(url, { data: this.tempProduct })
+        .then((res) => {
+          if (res.data.success) {
+            this.$swal({
+              title: res.data.message,
+              icon: 'success',
+            });
+            this.getProducts();
             this.isLoading = false;
           } else {
             this.$swal({

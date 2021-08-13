@@ -43,7 +43,7 @@
               rules="email|required"
               v-model="form.user.email"
             ></Field>
-            <error-message name="email" class="invalid-feedback"> </error-message>
+            <ErrorMessage name="email" class="invalid-feedback"> </ErrorMessage>
           </div>
 
           <div class="mb-3">
@@ -58,7 +58,7 @@
               rules="required"
               v-model="form.user.name"
             ></Field>
-            <error-message name="姓名" class="invalid-feedback"></error-message>
+            <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
           </div>
 
           <div class="mb-3">
@@ -73,7 +73,7 @@
               :rules="isPhone"
               v-model="form.user.tel"
             ></Field>
-            <error-message name="電話" class="invalid-feedback"></error-message>
+            <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
           </div>
 
           <div class="mb-3">
@@ -88,7 +88,7 @@
               rules="required"
               v-model="form.user.address"
             ></Field>
-            <error-message name="地址" class="invalid-feedback"></error-message>
+            <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
           </div>
 
           <div class="mb-3">

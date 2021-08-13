@@ -55,7 +55,10 @@ export default {
             document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
             this.$router.push('/admin/products');
           } else {
-            alert(res.data.message);
+            this.$swal({
+              title: res.data.message,
+              icon: 'error',
+            });
           }
         })
         .catch((err) => {

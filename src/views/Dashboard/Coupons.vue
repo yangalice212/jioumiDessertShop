@@ -1,5 +1,5 @@
 <template>
-  <!-- <Loading :isLoading="isLoading" /> -->
+  <Loading :isLoading="isLoading" />
   <div class="container-fluid container-lg">
     <div class="d-flex justify-content-end my-4">
       <button
@@ -18,13 +18,13 @@
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table text-warning" style="min-width: 650px;">
+      <table class="table text-warning" style="min-width: 500px;">
         <thead>
           <tr>
             <th width="20%">Title</th>
-            <th width="15%">Percent</th>
+            <th width="10%">Percent</th>
             <th width="20%">Due Date</th>
-            <th width="15%">Enabled</th>
+            <th width="20%">Enabled</th>
             <th width="15%" class="text-center">Edit</th>
           </tr>
         </thead>
@@ -41,7 +41,7 @@
                   class="form-check-input"
                   type="checkbox"
                   checked
-                  @click="updateCoupon(item)"
+                  @click="updateEnabled(item)"
                   :id="item.id"
                 />
                 <label class="form-check-label" :for="item.id">啟用</label>
@@ -50,7 +50,7 @@
                 ><input
                   class="form-check-input"
                   type="checkbox"
-                  @click="updateCoupon(item)"
+                  @click="updateEnabled(item)"
                   :id="item.id"
                 />
                 <label class="form-check-label text-gray" :for="item.id">未啟用</label>
@@ -73,11 +73,16 @@
       </table>
     </div>
   </div>
-  <!-- <ProductModal /> -->
+  <CouponModal
+    :coupon="tempCoupon"
+    :is-new="isNew"
+    @update-coupon="updateCoupon"
+    ref="couponModal"
+  />
 </template>
 
 <script>
-// import ProductModal from '@/components/ProductModal.vue';
+import CouponModal from '@/components/CouponModal.vue';
 
 export default {
   name: 'Coupons',
@@ -90,9 +95,9 @@ export default {
       isLoading: false,
     };
   },
-  // components: {
-  //   ProductModal,
-  // },
+  components: {
+    CouponModal,
+  },
   mounted() {
     this.getCoupons();
   },
@@ -126,6 +131,7 @@ export default {
       switch (status) {
         case 'new':
           this.isNew = true;
+          this.tempCoupon = { due_date: new Date().getTime() / 1000, is_enabled: 0 };
           couponModal.openModal();
           break;
         case 'edit':
@@ -152,6 +158,39 @@ export default {
             });
             this.getCoupons();
             couponModal.hideModal();
+            this.isLoading = false;
+          } else {
+            this.$swal({
+              title: res.data.message,
+              icon: 'error',
+              showCancelButton: true,
+              cancelButtonText: '取消',
+            });
+            this.isLoading = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    updateEnabled(item) {
+      this.isLoading = true;
+      this.tempCoupon = { ...item };
+      if (this.tempCoupon.is_enabled) {
+        this.tempCoupon.is_enabled = 0;
+      } else {
+        this.tempCoupon.is_enabled = 1;
+      }
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${item.id}`;
+      this.$http
+        .put(url, { data: this.tempCoupon })
+        .then((res) => {
+          if (res.data.success) {
+            this.$swal({
+              title: res.data.message,
+              icon: 'success',
+            });
+            this.getCoupons();
             this.isLoading = false;
           } else {
             this.$swal({

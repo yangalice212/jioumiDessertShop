@@ -28,7 +28,7 @@ setLocale('zh_TW');
 const app = createApp(App);
 
 const options = {
-  confirmButtonColor: '#3085d6',
+  confirmButtonColor: '#A06265',
 };
 app.use(VueSweetalert2, options);
 

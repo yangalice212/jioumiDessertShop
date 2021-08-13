@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table text-warning" style="min-width: 650px;">
+      <table class="table text-warning" style="min-width: 710px;">
         <thead>
           <tr>
             <th width="15%">Date</th>
@@ -28,7 +28,9 @@
               {{ $filter.date(item.create_at) }}
             </td>
             <td>{{ item.user.email }}</td>
-            <td class="fw-bold"><a href="#">Order Detail</a></td>
+            <td class="fw-bold">
+              <a href="#" @click.prevent="openModal(item, 'detail')">Order Detail</a>
+            </td>
             <td class="fw-bold">NT$ {{ item.total }}</td>
             <td>
               <span class="form-check form-switch" v-if="item.is_paid">
@@ -36,7 +38,7 @@
                   class="form-check-input"
                   type="checkbox"
                   checked
-                  @click="updateOrder(item)"
+                  @click="updatePaid(item)"
                   :id="item.id"
                 />
                 <label class="form-check-label" :for="item.id">已付款</label>
@@ -45,7 +47,7 @@
                 ><input
                   class="form-check-input"
                   type="checkbox"
-                  @click="updateOrder(item)"
+                  @click="updatePaid(item)"
                   :id="item.id"
                 />
                 <label class="form-check-label text-gray" :for="item.id">未付款</label>
@@ -68,26 +70,28 @@
       </table>
     </div>
   </div>
-  <!-- <ProductModal /> -->
+  <OrderModal :order="tempOrder" @update-order="updateOrder" ref="orderModal"></OrderModal>
+  <DetailModal :order="tempOrder" ref="detailModal"></DetailModal>
 </template>
 
 <script>
-// import ProductModal from '@/components/ProductModal.vue';
+import OrderModal from '@/components/OrderModal.vue';
+import DetailModal from '@/components/DetailModal.vue';
 
 export default {
   name: 'Orders',
   data() {
     return {
       orders: [],
-      tempOrders: {},
+      tempOrder: {},
       pagination: {},
-      isNew: false,
       isLoading: false,
     };
   },
-  // components: {
-  //   ProductModal,
-  // },
+  components: {
+    OrderModal,
+    DetailModal,
+  },
   mounted() {
     this.getOrders();
   },
@@ -116,16 +120,14 @@ export default {
         });
     },
     openModal(item, status) {
-      const { orderModal } = this.$refs;
+      const { orderModal, detailModal } = this.$refs;
       this.tempOrder = { ...item };
       switch (status) {
-        case 'new':
-          this.isNew = true;
+        case 'edit':
           orderModal.openModal();
           break;
-        case 'edit':
-          this.isNew = false;
-          orderModal.openModal();
+        case 'detail':
+          detailModal.openModal();
           break;
         default:
           break;
@@ -147,6 +149,39 @@ export default {
             });
             this.getOrders();
             orderModal.hideModal();
+            this.isLoading = false;
+          } else {
+            this.$swal({
+              title: res.data.message,
+              icon: 'error',
+              showCancelButton: true,
+              cancelButtonText: '取消',
+            });
+            this.isLoading = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    updatePaid(item) {
+      this.isLoading = true;
+      this.tempOrder = { ...item };
+      if (this.tempOrder.is_paid) {
+        this.tempOrder.is_paid = false;
+      } else {
+        this.tempOrder.is_paid = true;
+      }
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      this.$http
+        .put(url, { data: this.tempOrder })
+        .then((res) => {
+          if (res.data.success) {
+            this.$swal({
+              title: res.data.message,
+              icon: 'success',
+            });
+            this.getOrders();
             this.isLoading = false;
           } else {
             this.$swal({

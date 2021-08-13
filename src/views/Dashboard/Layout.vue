@@ -26,11 +26,11 @@
               ><span class="material-icons me-2"> local_activity </span>Coupons</router-link
             >
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link to="/admin/coupons" class="nav-link d-flex align-items-center"
               ><span class="material-icons me-2"> article </span>Articles</router-link
             >
-          </li>
+          </li> -->
         </ul>
         <a
           href="#"
@@ -105,7 +105,12 @@ export default {
             if (res.data.success) {
               this.checkLoginStatus = true;
             } else {
-              alert(res.data.message);
+              this.$swal({
+                title: res.data.message,
+                icon: 'error',
+                showCancelButton: true,
+                cancelButtonText: '取消',
+              });
               this.$router.push('/login');
             }
           })
@@ -113,13 +118,19 @@ export default {
             console.log(err);
           });
       } else {
-        alert('您尚未登入');
+        this.$swal({
+          icon: 'warning',
+          title: '您尚未登入',
+        });
         this.$router.push('/login');
       }
     },
     signout() {
       document.cookie = 'hexToken=;expires=;';
-      alert('請重新登入');
+      this.$swal({
+        icon: 'warning',
+        title: '請重新登入',
+      });
       this.$router.push('/login');
     },
   },
