@@ -74,6 +74,9 @@
         </tbody>
       </table>
     </div>
+    <div class="d-flex justify-content-end">
+      <Pagination :page="pagination" @get-data="getProducts" />
+    </div>
   </div>
   <ProductModal
     :product="tempProduct"
@@ -85,6 +88,7 @@
 
 <script>
 import ProductModal from '@/components/ProductModal.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   name: 'Products',
@@ -99,6 +103,7 @@ export default {
   },
   components: {
     ProductModal,
+    Pagination,
   },
   mounted() {
     this.getProducts();

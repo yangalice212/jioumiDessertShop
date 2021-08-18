@@ -72,6 +72,9 @@
         </tbody>
       </table>
     </div>
+    <div class="d-flex justify-content-end">
+      <Pagination :page="pagination" @get-data="getCoupons" />
+    </div>
   </div>
   <CouponModal
     :coupon="tempCoupon"
@@ -83,6 +86,7 @@
 
 <script>
 import CouponModal from '@/components/CouponModal.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   name: 'Coupons',
@@ -97,6 +101,7 @@ export default {
   },
   components: {
     CouponModal,
+    Pagination,
   },
   mounted() {
     this.getCoupons();

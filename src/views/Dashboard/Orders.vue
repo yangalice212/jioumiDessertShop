@@ -1,5 +1,5 @@
 <template>
-  <!-- <Loading :isLoading="isLoading" /> -->
+  <Loading :isLoading="isLoading" />
   <div class="container-fluid container-lg">
     <div class="d-flex justify-content-end my-4">
       <button
@@ -69,6 +69,9 @@
         </tbody>
       </table>
     </div>
+    <div class="d-flex justify-content-end">
+      <Pagination :page="pagination" @get-data="getOrders" />
+    </div>
   </div>
   <OrderModal :order="tempOrder" @update-order="updateOrder" ref="orderModal"></OrderModal>
   <DetailModal :order="tempOrder" ref="detailModal"></DetailModal>
@@ -77,6 +80,7 @@
 <script>
 import OrderModal from '@/components/OrderModal.vue';
 import DetailModal from '@/components/DetailModal.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   name: 'Orders',
@@ -91,6 +95,7 @@ export default {
   components: {
     OrderModal,
     DetailModal,
+    Pagination,
   },
   mounted() {
     this.getOrders();

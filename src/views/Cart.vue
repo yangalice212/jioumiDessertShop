@@ -92,7 +92,7 @@
               </td>
             </tr>
             <tr v-if="carts.final_total !== carts.total">
-              <td colspan="3" class="text-end text-success">折扣價</td>
+              <td colspan="4" class="text-end text-success">折扣價</td>
               <td class="text-end text-success">NT$ {{ $filter.thousands(carts.final_total) }}</td>
             </tr>
           </tfoot>
