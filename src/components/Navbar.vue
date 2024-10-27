@@ -34,13 +34,13 @@
         </ul>
       </div>
       <ul class="list-unstyled d-flex mb-0">
-        <li class="me-3">
+        <!-- <li class="me-3">
           <router-link to="/wishlist" class="d-flex align-items-center text-decoration-none"
             ><span class="material-icons">
               favorite
             </span></router-link
           >
-        </li>
+        </li> -->
         <li>
           <router-link
             to="/cart"
@@ -48,7 +48,8 @@
             ><span class="material-icons">
               shopping_bag
             </span>
-            <span v-if="cart?.carts?.length !== 0"
+            <span
+              v-if="cart?.carts?.length !== 0"
               class="badge rounded-pill bg-warning position-absolute"
               style="top: -8px; right: -12px;"
               >{{ cart?.carts?.length }}</span

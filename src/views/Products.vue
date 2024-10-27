@@ -36,11 +36,11 @@
             <div class="d-flex justify-content-between align-items-center py-2">
               <h3>{{ item.title }}</h3>
               <ul class="list-unstyled d-flex">
-                <li class="me-1">
+                <!-- <li class="me-1">
                   <a href="#" @click.prevent="addFavor(item.id)">
                     <span class="material-icons">favorite</span>
                   </a>
-                </li>
+                </li> -->
                 <li>
                   <a href="#" @click.prevent="addCart(item.id)">
                     <span class="material-icons">shopping_bag</span>
